@@ -3078,7 +3078,7 @@ class Axes(_AxesBase):
             autopct=None, pctdistance=0.6, shadow=False, labeldistance=1.1,
             startangle=0, radius=1, counterclock=True,
             wedgeprops=None, textprops=None, center=(0, 0),
-            frame=False, rotatelabels=False, *, normalize=True):
+            frame=False, rotatelabels=False, *, normalize=True, swaplabelpct=False):
         """
         Plot a pie chart.
 
@@ -3156,6 +3156,9 @@ class Axes(_AxesBase):
         rotatelabels : bool, default: False
             Rotate each label to the angle of the corresponding slice if true.
 
+        swaplabelpct : bool, default: False
+            Swap labels and %s of each slice if true.
+
         data : indexable object, optional
             DATA_PARAMETER_PLACEHOLDER
 
@@ -3187,6 +3190,9 @@ class Axes(_AxesBase):
 
         if np.any(x < 0):
             raise ValueError("Wedge sizes 'x' must be non negative values")
+
+        if swaplabelpct: 
+            labeldistance, pctdistance = pctdistance, labeldistance+0.05
 
         sx = x.sum()
 
